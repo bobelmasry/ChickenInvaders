@@ -1,20 +1,18 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-
+#include <QGraphicsItem>
 #include <QObject>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsTextItem>
 
-class Player : public QObject, public QGraphicsPixmapItem
+class Player: public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    Player(QGraphicsTextItem * score=0);
-private:
-    int scoreValue;
-    QGraphicsTextItem * score;
-public slots:
+    Player();
+public:
     void keyPressEvent(QKeyEvent * event);
+public slots:
+    void createEnemy();
+
 };
 
 #endif // PLAYER_H

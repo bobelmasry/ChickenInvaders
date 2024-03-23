@@ -1,38 +1,42 @@
 #include "player.h"
-
 #include <QKeyEvent>
+#include "bullet.h"
 #include <QGraphicsScene>
-
-Player::Player(QGraphicsTextItem * inScore)
-{
-    score = inScore;
-    scoreValue = 0;
+#include <QDebug>
+#include "enemy.h"
+Player::Player() {
+    setFlag(QGraphicsItem::ItemIsFocusable); // Set the focus flag for the Player object
+    setFocus(); // Set the focus to the Player object
 }
 
-void Player::keyPressEvent(QKeyEvent * event)
+void Player::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Left)
+    // *******  Event Handling for the Player ********
+    if(event->key()== Qt::Key_Left)
     {
-        setPos(x()-30, y());
+        if(x()>0) // to prevent the player from getting out of the screen
+        {
+            setPos(x()-20,y());
+        }
     }
-    else if (event->key() == Qt::Key_Right)
-    {
-        setPos(x()+30, y());
+    else if(event->key()== Qt::Key_Right)
+
+    { if(x()+100<800) // to prevent the player from getting out of the screen
+            setPos(x()+20,y());
     }
-    else if (event->key() == Qt::Key_Up)
+    else if(event->key()== Qt::Key_Space)
     {
-        setPos(x(), y()-30);
-    }
-    else if (event->key() == Qt::Key_Down)
-    {
-        setPos(x(), y()+30);
+        Bullet * bullet = new Bullet();
+        bullet->setPos(x(),y());
+        scene()->addItem(bullet);
+
     }
 
-    QList<QGraphicsItem *> colliding_items = collidingItems(); // list of poiners
-    for(int i = 0; i < colliding_items.size(); i++)
-    {
-        scene()->removeItem(colliding_items[i]); // need to #include
-        scoreValue++;
-        score->setPlainText("Score: " + QString::number(scoreValue));
-    }
+
+}
+// CreateEnemy function used to create the eneimes
+void Player::createEnemy()
+{ Enemy* enemy = new Enemy();
+    scene()->addItem(enemy);
+
 }
