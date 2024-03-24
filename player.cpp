@@ -5,12 +5,48 @@
 #include <QDebug>
 #include "enemy.h"
 
-Player::Player() : QGraphicsPixmapItem() {
+Player::Player(QGraphicsScene *scene) : QGraphicsPixmapItem(), health(3), score(0) {
     // Load the player image
     setPixmap(QPixmap("D:/python_projects/other shit/CS/ChickenInvaders/images/ship.png").scaled(100,100));
     setFlag(QGraphicsPixmapItem::ItemIsFocusable); // Set the focus flag for the Player object
     setFocus(); // Set the focus to the Player object
+
+    healthDisplay = new QGraphicsTextItem();
+    healthDisplay->setPlainText("Health: " + QString::number(health));
+    healthDisplay->setDefaultTextColor(Qt::red);
+    healthDisplay->setPos(10, 10);
+    scene->addItem(healthDisplay);
+
+    // Create score display
+    scoreDisplay = new QGraphicsTextItem();
+    scoreDisplay->setPlainText("Score: " + QString::number(score));
+    scoreDisplay->setDefaultTextColor(Qt::blue);
+    scoreDisplay->setPos(10, 30);
+    scene->addItem(scoreDisplay);
+
+    // Create message box
+    msgBox = new QMessageBox();
 }
+
+
+void Player::decrease() {
+    health--;
+    healthDisplay->setPlainText("Health: " + QString::number(health));
+    healthDisplay->setDefaultTextColor(Qt::red);
+    if (health < 1) {
+        msgBox->setText("Game Over!\nScore: " + QString::number(score));
+        msgBox->setWindowTitle("Game Over");
+        msgBox->exec();
+        // Additional actions for game over can be added here
+    }
+}
+
+void Player::increase() {
+    score++;
+    scoreDisplay->setPlainText("Score: " + QString::number(score));
+    scoreDisplay->setDefaultTextColor(Qt::blue);
+}
+
 
 void Player::keyPressEvent(QKeyEvent *event)
 {

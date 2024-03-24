@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     // *******  Create the Player ********
-    Player * player = new Player();
+    Player * player = new Player(scene);
     scene->addItem(player);
     player->setPos(scene->width() / 2 - player->pixmap().width() / 2, scene->height() - player->pixmap().height());
 
