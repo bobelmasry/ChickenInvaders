@@ -4,47 +4,48 @@
 #include <QList>
 #include <enemy.h>
 #include <player.h>
-Bullet::Bullet():QObject(), QGraphicsRectItem() {
+#include <QPixmap>
 
-    // *******  Setting the bullets' size ********
-    setRect(0,0,10,50);
+Bullet::Bullet() : QGraphicsPixmapItem() {
+    // Load the bullet image
+    setPixmap(QPixmap("D:/python_projects/other shit/CS/ChickenInvaders/images/laser.png").scaled(100,100));
+        setPos(x() + pixmap().width() / 2, y()); // Adjust the position as needed
 
-    // *******  Generating the Bullets automatically ********
-    QTimer * timer = new QTimer();
-    connect(timer, SIGNAL(timeout()),this,SLOT (move()));
-    timer->start(50);
-}
+        // Start a timer to move the bullet
+        QTimer *timer = new QTimer(this);
+        connect(timer, SIGNAL(timeout()), this, SLOT(move()));
+        timer->start(50); // Adjust the timer interval as needed
+    }
 
 // Move function is used to
 
-void Bullet:: move()
-{
-
-    // 2- Handle the collision of the bullets with enemies
-    // *******  Getting the colliding items with the Bullet ********
-
-    QList<QGraphicsItem*> colliding_items=collidingItems();
-    for(int i=0, n=colliding_items.size(); i<n;++i)
+    void Bullet::move()
     {
-        if(typeid(*(colliding_items[i])) == typeid(Enemy))
+        // Handle the collision of the bullets with enemies
+        QList<QGraphicsItem*> colliding_items = collidingItems();
+        for(int i = 0; i < colliding_items.size(); ++i)
         {
-            scene()->removeItem(colliding_items[i]);
+            if(typeid(*(colliding_items[i])) == typeid(Enemy))
+            {
+                // Remove both the enemy and the bullet
+                scene()->removeItem(colliding_items[i]);
+                scene()->removeItem(this);
+                delete colliding_items[i];
+                delete this;
+                return;
+            }
+        }
+
+        // Move the bullet upward
+        setPos(x(), y() - 10);
+
+        // Remove the bullet if it goes out of the scene
+        if(pos().y() + pixmap().height() < 0)
+        {
             scene()->removeItem(this);
             delete this;
-            delete colliding_items[i];
-            return;
         }
     }
 
-
-
-    // *******  Moving the bullets upward ********
-
-    setPos(x(),y()-10);
-    if(pos().y()+rect().height()<0){
-        scene()->removeItem(this);
-        delete this;
-    }
-}
 
 

@@ -4,8 +4,11 @@
 #include <QGraphicsScene>
 #include <QDebug>
 #include "enemy.h"
-Player::Player() {
-    setFlag(QGraphicsItem::ItemIsFocusable); // Set the focus flag for the Player object
+
+Player::Player() : QGraphicsPixmapItem() {
+    // Load the player image
+    setPixmap(QPixmap("D:/python_projects/other shit/CS/ChickenInvaders/images/ship.png").scaled(100,100));
+    setFlag(QGraphicsPixmapItem::ItemIsFocusable); // Set the focus flag for the Player object
     setFocus(); // Set the focus to the Player object
 }
 
@@ -29,14 +32,12 @@ void Player::keyPressEvent(QKeyEvent *event)
         Bullet * bullet = new Bullet();
         bullet->setPos(x(),y());
         scene()->addItem(bullet);
-
     }
-
-
 }
-// CreateEnemy function used to create the eneimes
-void Player::createEnemy()
-{ Enemy* enemy = new Enemy();
-    scene()->addItem(enemy);
 
+// CreateEnemy function used to create the enemies
+void Player::createEnemy()
+{
+    Enemy* enemy = new Enemy();
+    scene()->addItem(enemy);
 }
