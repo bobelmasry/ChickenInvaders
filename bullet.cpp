@@ -8,7 +8,7 @@
 
 Bullet::Bullet() : QGraphicsPixmapItem() {
     // Load the bullet image
-    setPixmap(QPixmap("D:/python_projects/other shit/CS/ChickenInvaders/images/laser.png").scaled(100,100));
+    setPixmap(QPixmap(":/images/images/laser.png").scaled(100,100));
         setPos(x() + pixmap().width() / 2, y()); // Adjust the position as needed
 
         // Start a timer to move the bullet

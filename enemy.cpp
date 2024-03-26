@@ -6,7 +6,7 @@
 
 Enemy::Enemy() {
     // Load the enemy image
-    setPixmap(QPixmap("D:/python_projects/other shit/CS/ChickenInvaders/images/chicken.png").scaled(100,100));
+    setPixmap(QPixmap(":/images/images/chicken.png").scaled(100,100));
 
     // Setting the postion of the enemy within the view dimensions
     int random_number = QRandomGenerator::global()->bounded(0, 700);

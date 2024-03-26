@@ -7,7 +7,7 @@
 
 Player::Player(QGraphicsScene *scene) : QGraphicsPixmapItem(), health(3), score(0) {
     // Load the player image
-    setPixmap(QPixmap("D:/python_projects/other shit/CS/ChickenInvaders/images/ship.png").scaled(100,100));
+    setPixmap(QPixmap(":/images/images/ship.png").scaled(100,100));
     setFlag(QGraphicsPixmapItem::ItemIsFocusable); // Set the focus flag for the Player object
     setFocus(); // Set the focus to the Player object
 
