@@ -4,6 +4,7 @@
 #include "player.h"
 #include <QTimer>
 #include <QDebug>
+#include <QGraphicsPixmapItem> // Include for using QGraphicsPixmapItem
 
 int main(int argc, char *argv[])
 {
@@ -12,9 +13,14 @@ int main(int argc, char *argv[])
     // ******* Create the Scene ********
     QGraphicsScene * scene = new QGraphicsScene();
     scene->setSceneRect(0,0,800,600);
-    scene->setBackgroundBrush(Qt::white);
 
-    // *******  Create the View ********
+    // ******* Add Background Image ********
+    QPixmap backgroundImage(":/images/images/SpaceBackground.jpg"); // Load background image from resources
+    QGraphicsPixmapItem *background = new QGraphicsPixmapItem(backgroundImage);
+    scene->addItem(background);
+    background->setPos(0, 0); // Set position of the background to the top-left corner of the scene
+
+    // ******* Create the View ********
     QGraphicsView * view = new QGraphicsView(scene);
     view->setFixedSize(800,600);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

@@ -37,7 +37,7 @@ void Player::decrease() {
         msgBox->setText("Game Over!\nScore: " + QString::number(score));
         msgBox->setWindowTitle("Game Over");
         msgBox->exec();
-        // Additional actions for game over can be added here
+        // Additional actions for game over can be added here like going to homescreen
     }
 }
 
