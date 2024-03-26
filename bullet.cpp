@@ -27,11 +27,21 @@ Bullet::Bullet() : QGraphicsPixmapItem() {
         {
             if(typeid(*(colliding_items[i])) == typeid(Enemy))
             {
+                // Increment the score through the scene if the colliding item is an enemy
+                QList<QGraphicsItem*> scene_items = scene()->items();
+                for (int j = 0; j < scene_items.size(); ++j) {
+                    Player *player = dynamic_cast<Player*>(scene_items[j]);
+                    if (player) {
+                        player->increase(); // Call the increase function of the player
+                        break; // Once score is incremented, exit the loop
+                    }
+                }
+
                 // Remove both the enemy and the bullet
-                scene()->removeItem(colliding_items[i]);
-                scene()->removeItem(this);
-                delete colliding_items[i];
-                delete this;
+                scene()->removeItem(colliding_items[i]); // Remove the enemy
+                scene()->removeItem(this); // Remove the bullet
+                delete colliding_items[i]; // Delete the enemy
+                delete this; // Delete the bullet
                 return;
             }
         }
@@ -46,6 +56,3 @@ Bullet::Bullet() : QGraphicsPixmapItem() {
             delete this;
         }
     }
-
-
-

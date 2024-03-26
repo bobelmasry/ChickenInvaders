@@ -33,11 +33,17 @@ void Enemy::move() {
     for (int i = 0; i < colliding_items.size(); ++i) {
         if (typeid(*(colliding_items[i])) == typeid(Player)) {
             // Remove both the enemy and the player
-            scene()->removeItem(colliding_items[i]);
-            scene()->removeItem(this);
-            delete colliding_items[i];
+            Player *player = dynamic_cast<Player*>(colliding_items[i]);
+            if (player) {
+                player->decrease(); // Call the decrease function of the player
+                if (player->getHealth() <= 0) { // Check if player's health is 0 or less
+                    scene()->removeItem(colliding_items[i]); // Remove the player from the scene
+                    delete colliding_items[i];
+                }
+
             delete this;
             return;
         }
     }
+}
 }

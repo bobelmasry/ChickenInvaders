@@ -71,6 +71,10 @@ void Player::keyPressEvent(QKeyEvent *event)
     }
 }
 
+int Player::getHealth(){
+    return health;
+}
+
 // CreateEnemy function used to create the enemies
 void Player::createEnemy()
 {

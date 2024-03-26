@@ -18,6 +18,7 @@ class Player : public QObject, public QGraphicsPixmapItem
 public:
     Player(QGraphicsScene *scene);
     void keyPressEvent(QKeyEvent *event);
+    int getHealth();
 public slots:
     void createEnemy();
     void decrease();
